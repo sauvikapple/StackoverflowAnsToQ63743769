@@ -10,7 +10,7 @@ import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier: String = "CollectionViewCell"
-    
+    private var valueViewHeightConst: NSLayoutConstraint?
     lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -31,7 +31,7 @@ class CollectionViewCell: UICollectionViewCell {
         
         return label
     }()
-    private var viewViewHeightConst: NSLayoutConstraint?
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,12 +50,12 @@ class CollectionViewCell: UICollectionViewCell {
             timeLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
         contentView.addSubview(valueView)
-        viewViewHeightConst = valueView.heightAnchor.constraint(equalToConstant: 0.0)
+        valueViewHeightConst = valueView.heightAnchor.constraint(equalToConstant: 0.0)
         NSLayoutConstraint.activate([
             valueView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             valueView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             valueView.bottomAnchor.constraint(equalTo: timeLabel.topAnchor, constant: -4),
-            viewViewHeightConst!
+            valueViewHeightConst!
         ])
         
         contentView.addSubview(valueLabel)
@@ -66,7 +66,7 @@ class CollectionViewCell: UICollectionViewCell {
     }
     
     func set(barHeight: CGFloat, barIndex: Int, value: Double) {
-        viewViewHeightConst?.constant = barHeight
+        valueViewHeightConst?.constant = barHeight
         valueLabel.text = "\(value)"
         timeLabel.text = "\(barIndex)"
     }
